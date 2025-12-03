@@ -7,12 +7,11 @@ import { UsersModule } from './users/users.module';
 import { TasksModule } from './tasks/tasks.module';
 import { ProjectsModule } from './projects/projects.module';
 import { ClientsModule } from './clients/clients.module';
-import { UserService } from './user/user.service';
-import { UsersModule } from './users/users.module';
+import { UsersService } from './users/users.service';
 
 @Module({
   imports: [AuthModule, UsersModule, ClientsModule, ProjectsModule, TasksModule],
   controllers: [AppController],
-  providers: [AppService, PrismaService, UserService],
+  providers: [AppService, PrismaService, UsersService],
 })
 export class AppModule {}
