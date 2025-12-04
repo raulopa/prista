@@ -12,7 +12,7 @@
  */
 
 import * as runtime from "@prisma/client/runtime/client"
-import type * as Prisma from "./prismaNamespace.js"
+import type * as Prisma from "./prismaNamespace"
 
 
 const config: runtime.GetPrismaClientConfig = {
@@ -20,7 +20,7 @@ const config: runtime.GetPrismaClientConfig = {
   "clientVersion": "7.0.1",
   "engineVersion": "f09f2815f091dbba658cdcd2264306d88bb5bda6",
   "activeProvider": "postgresql",
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel User {\n  id       Int    @id @default(autoincrement())\n  name     String\n  email    String @unique\n  password String\n  role     String @default(\"user\")\n  tasks    Task[]\n}\n\nmodel Client {\n  id       Int       @id @default(autoincrement())\n  name     String\n  email    String?\n  tasks    Task[]\n  projects Project[]\n}\n\nmodel Project {\n  id       Int    @id @default(autoincrement())\n  name     String\n  client   Client @relation(fields: [clientId], references: [id])\n  clientId Int\n  tasks    Task[]\n}\n\nmodel Task {\n  id           Int      @id @default(autoincrement())\n  title        String\n  description  String?\n  status       String   @default(\"todo\")\n  priority     String   @default(\"medium\")\n  assignedTo   User?    @relation(fields: [assignedToId], references: [id])\n  assignedToId Int?\n  client       Client   @relation(fields: [clientId], references: [id])\n  clientId     Int\n  projectId    Int?\n  project      Project? @relation(fields: [projectId], references: [id])\n}\n",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../src/generated\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel User {\n  id       Int    @id @default(autoincrement())\n  name     String\n  email    String @unique\n  password String\n  role     String @default(\"user\")\n  tasks    Task[]\n}\n\nmodel Client {\n  id       Int       @id @default(autoincrement())\n  name     String\n  email    String?\n  tasks    Task[]\n  projects Project[]\n}\n\nmodel Project {\n  id       Int    @id @default(autoincrement())\n  name     String\n  client   Client @relation(fields: [clientId], references: [id])\n  clientId Int\n  tasks    Task[]\n}\n\nmodel Task {\n  id           Int      @id @default(autoincrement())\n  title        String\n  description  String?\n  status       String   @default(\"todo\")\n  priority     String   @default(\"medium\")\n  assignedTo   User?    @relation(fields: [assignedToId], references: [id])\n  assignedToId Int?\n  client       Client   @relation(fields: [clientId], references: [id])\n  clientId     Int\n  projectId    Int?\n  project      Project? @relation(fields: [projectId], references: [id])\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
@@ -37,10 +37,10 @@ async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Modul
 }
 
 config.compilerWasm = {
-  getRuntime: async () => await import("@prisma/client/runtime/query_compiler_bg.postgresql.mjs"),
+  getRuntime: async () => await import("@prisma/client/runtime/query_compiler_bg.postgresql.js"),
 
   getQueryCompilerWasmModule: async () => {
-    const { wasm } = await import("@prisma/client/runtime/query_compiler_bg.postgresql.wasm-base64.mjs")
+    const { wasm } = await import("@prisma/client/runtime/query_compiler_bg.postgresql.wasm-base64.js")
     return await decodeBase64AsWasm(wasm)
   }
 }

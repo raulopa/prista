@@ -7,11 +7,15 @@ import { UsersModule } from './users/users.module';
 import { TasksModule } from './tasks/tasks.module';
 import { ProjectsModule } from './projects/projects.module';
 import { ClientsModule } from './clients/clients.module';
-import { UsersService } from './users/users.service';
+import { PrismaModule } from './prisma/prisma.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [AuthModule, UsersModule, ClientsModule, ProjectsModule, TasksModule],
+  imports: [AuthModule, UsersModule, ClientsModule, ProjectsModule, TasksModule, 
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),],
   controllers: [AppController],
-  providers: [AppService, PrismaService, UsersService],
+  providers: [AppService],
 })
 export class AppModule {}
