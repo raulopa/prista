@@ -55,7 +55,7 @@ export default function MainLayout() {
             <h2 className="text-xl font-bold">Dashboard</h2>
             <Button
               onClick={() => setIsOpen(true)}
-              variant="outline"
+              variant={"white"}
               className="bg-white! text-black! hover:!bg-gray-100! shadow-sm"
             >
               Añadir proyecto
@@ -68,9 +68,16 @@ export default function MainLayout() {
         </div>
       </div>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent>
+        <DialogContent className="[&>button]:hidden">
           <DialogHeader>
             <DialogTitle>Crear nuevo proyecto</DialogTitle>
+            <Button
+              variant="white"
+              className="absolute top-2 right-2 p-1 text-black!"
+              asChild
+            >
+              <DialogClose />
+            </Button>
             <DialogDescription className="mt-4">
               <Input
                 type="text"
@@ -86,7 +93,9 @@ export default function MainLayout() {
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button onClick={handleSaveProject}>Guardar</Button>
+            <Button variant={"white"} onClick={handleSaveProject}>
+              Guardar
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

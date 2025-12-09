@@ -1,4 +1,5 @@
 import { useProjects } from "../../api/services/projects-service";
+import ProjectCard from "./project-card/project-card";
 
 export default function ProjectsList() {
 
@@ -10,7 +11,7 @@ export default function ProjectsList() {
     return (
         <div>
           {data.map((d:any) => {
-            return <div>{d.name}</div>
+            return <ProjectCard project={d} ></ProjectCard>
           })}
         </div>
     );

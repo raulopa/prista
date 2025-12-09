@@ -1,7 +1,15 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@tailwindcss preflight;
+@tailwind utilities;
 
 @custom-variant dark (&:is(.dark *));
+
+/* En tu CSS o tailwind global */
+[data-state="open"] button[aria-label="Close"] {
+  display: none;
+}
+
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
