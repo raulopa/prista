@@ -1,7 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 
-// --- 1. Funciones de Axios (Peticiones puras) ---
 const API_URL : string = import.meta.env.VITE_API_URL;
 
 const fetchProjects = async () => {
@@ -9,7 +8,11 @@ const fetchProjects = async () => {
   return data;
 };
 
-// Nota: createProject recibe el objeto del nuevo proyecto
+const fetchProject = async (id: number) => {
+  const { data } = await axios.get(`${API_URL}/projects/${id}`);
+  return data;
+};
+
 const createProjectRequest = async (project: any) => {
   const { data } = await axios.post(`${API_URL}/projects`, project);
   return data;
@@ -21,6 +24,16 @@ export const useProjects = () => {
     queryFn: fetchProjects 
   });
 };
+
+export const useProject = (id: number) => {
+  return useQuery({
+    queryKey: ["project", id],
+    queryFn: () => fetchProject(id),
+    enabled: !!id,
+  });
+};
+
+
 
 export const useCreateProject = () => {
   const queryClient = useQueryClient();
